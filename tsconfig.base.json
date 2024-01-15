@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "lib": ["esnext", "dom"],
+    "module": "esnext",
+    "target": "esnext",
+    "composite": true,
+    "declaration": true,
+    "declarationMap": true,
+    "incremental": true,
+    "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "moduleResolution": "NodeNext",
+    "strict": true,
+    "pretty": true,
+
+    "emitDeclarationOnly": true,
+    "noEmitOnError": true
+  }
+}
