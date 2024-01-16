@@ -33,6 +33,7 @@ jobs:
 
       - name: Check Cache
         uses: actions/cache@v3
+        id: yarnCache
         with:
           path: node_modules
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
@@ -40,6 +41,7 @@ jobs:
             ${{ runner.os }}-yarn-
 
       - name: Install Dependencies
+        if: steps.yarnCache.outputs.cache-hit != 'true'
         run: yarn install --immutable
 
       - name: Build
