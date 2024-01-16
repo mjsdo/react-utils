@@ -44,14 +44,18 @@ jobs:
         if: steps.yarnCache.outputs.cache-hit != 'true'
         run: yarn install --immutable
 
+      - name: Enable affected command
+        uses: nrwl/nx-set-shas@v3
+        run: git branch --track main origin/main
+
       - name: Build
-        run: yarn packages:build
+        run: yarn build:packages --configuration=ci
 
       - name: Create Release Pull Request or Publish to npm
         uses: changesets/action@v1
         with:
-          publish: yarn packages:release
-          version: yarn packages:version
+          publish: yarn release:packages
+          version: yarn version:packages
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
