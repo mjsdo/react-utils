@@ -19,6 +19,8 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       # https://github.com/actions/setup-node/issues/899#issuecomment-1828798029
       - name: Setup Node.js
@@ -44,9 +46,12 @@ jobs:
         if: steps.yarnCache.outputs.cache-hit != 'true'
         run: yarn install --immutable
 
-      - name: Enable affected command
-        uses: nrwl/nx-set-shas@v3
-        run: git branch --track main origin/main
+      - name: Derive appropriate SHAs for base and head for `nx affected` commands
+        id: setSHAs
+        uses: nrwl/nx-set-shas@v4
+      - run: |
+          echo "BASE: ${{ steps.setSHAs.outputs.base }}"
+          echo "HEAD: ${{ steps.setSHAs.outputs.head }}"
 
       - name: Build
         run: yarn build:packages --configuration=ci
