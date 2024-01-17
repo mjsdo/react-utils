@@ -2108,9 +2108,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mjsdo/use-dialog@workspace:packages/use-dialog":
+"@mjsdo/pub-test@workspace:packages/__pub-test__":
   version: 0.0.0-use.local
-  resolution: "@mjsdo/use-dialog@workspace:packages/use-dialog"
+  resolution: "@mjsdo/pub-test@workspace:packages/__pub-test__"
+  peerDependencies:
+    react: ^17.0 || ^18.0
+    react-dom: ^17.0 || ^18.0
   languageName: unknown
   linkType: soft
 
@@ -2754,6 +2757,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@parcel/packager-ts@npm:2.11.0":
+  version: 2.11.0
+  resolution: "@parcel/packager-ts@npm:2.11.0"
+  dependencies:
+    "@parcel/plugin": "npm:2.11.0"
+  checksum: e60998ee7bf6699d75e1f7378c47c8b8ba3b63259c292205d4cac5e9cca86b2d91574bf209e5eeed33401a023be77512f9d194be9fb6d657dbab5ab57a8325ba
+  languageName: node
+  linkType: hard
+
 "@parcel/packager-wasm@npm:2.11.0":
   version: 2.11.0
   resolution: "@parcel/packager-wasm@npm:2.11.0"
@@ -3047,6 +3059,33 @@ __metadata:
     posthtml-render: "npm:^3.0.0"
     semver: "npm:^7.5.2"
   checksum: e434c18759f62a3028fdf78969bbe30128274c513d7e6f512e525e78fd9d8fa9ca8393b7d1f69d4573e59d020a591d35d6edabe99c175fb6ae38c8d95404b23a
+  languageName: node
+  linkType: hard
+
+"@parcel/transformer-typescript-types@npm:2.11.0":
+  version: 2.11.0
+  resolution: "@parcel/transformer-typescript-types@npm:2.11.0"
+  dependencies:
+    "@parcel/diagnostic": "npm:2.11.0"
+    "@parcel/plugin": "npm:2.11.0"
+    "@parcel/source-map": "npm:^2.1.1"
+    "@parcel/ts-utils": "npm:2.11.0"
+    "@parcel/utils": "npm:2.11.0"
+    nullthrows: "npm:^1.1.1"
+  peerDependencies:
+    typescript: ">=3.0.0"
+  checksum: aa9cdfa0fc6bb744e9e735e24dace361dc6f298269383bfbb62c9b3971588fff6f2d930ea9f61e75492744cc91233dcd53b8433f00b0b359ee7379052c29f0bd
+  languageName: node
+  linkType: hard
+
+"@parcel/ts-utils@npm:2.11.0":
+  version: 2.11.0
+  resolution: "@parcel/ts-utils@npm:2.11.0"
+  dependencies:
+    nullthrows: "npm:^1.1.1"
+  peerDependencies:
+    typescript: ">=3.0.0"
+  checksum: 407fbda9917a3d3953a85e410b27345d27c96d2598fc6cd6d01328b8aa26604496fc894ab3b8a4f964ef6144c9f97c11ee0ca918488308667fd3629f89d18f61
   languageName: node
   linkType: hard
 
@@ -6057,7 +6096,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"glob@npm:^10.2.2, glob@npm:^10.3.10":
+"glob@npm:^10.2.2, glob@npm:^10.3.10, glob@npm:^10.3.7":
   version: 10.3.10
   resolution: "glob@npm:10.3.10"
   dependencies:
@@ -8381,6 +8420,8 @@ __metadata:
     "@changesets/cli": "npm:^2.27.1"
     "@mjsdo/eslint-plugin": "npm:^0.0.5"
     "@nx/js": "npm:17.2.8"
+    "@parcel/packager-ts": "npm:2.11.0"
+    "@parcel/transformer-typescript-types": "npm:2.11.0"
     "@types/eslint": "npm:^8"
     "@types/react": "npm:^18.2.48"
     "@types/react-dom": "npm:^18.2.18"
@@ -8397,6 +8438,7 @@ __metadata:
     prettier: "npm:^3.2.1"
     react: "npm:^18.2.0"
     react-dom: "npm:^18.2.0"
+    rimraf: "npm:^5.0.5"
     typescript: "npm:^5.3.3"
   languageName: unknown
   linkType: soft
@@ -8674,6 +8716,17 @@ __metadata:
   bin:
     rimraf: bin.js
   checksum: 9cb7757acb489bd83757ba1a274ab545eafd75598a9d817e0c3f8b164238dd90eba50d6b848bd4dcc5f3040912e882dc7ba71653e35af660d77b25c381d402e8
+  languageName: node
+  linkType: hard
+
+"rimraf@npm:^5.0.5":
+  version: 5.0.5
+  resolution: "rimraf@npm:5.0.5"
+  dependencies:
+    glob: "npm:^10.3.7"
+  bin:
+    rimraf: dist/esm/bin.mjs
+  checksum: d50dbe724f33835decd88395b25ed35995077c60a50ae78ded06e0185418914e555817aad1b4243edbff2254548c2f6ad6f70cc850040bebb4da9e8cc016f586
   languageName: node
   linkType: hard
 

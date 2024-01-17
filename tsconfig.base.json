@@ -1,10 +1,8 @@
 {
   "compilerOptions": {
     "allowJs": true,
-    "lib": ["esnext", "dom"],
-    "module": "esnext",
-    "target": "esnext",
-    "composite": true,
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
+    "target": "es2018",
     "declaration": true,
     "declarationMap": true,
     "incremental": true,
@@ -12,11 +10,16 @@
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "isolatedModules": true,
-    "moduleResolution": "NodeNext",
+    "moduleResolution": "node",
     "strict": true,
+    "sourceMap": true,
     "pretty": true,
-
+    "noEmitOnError": true,
+    "jsx": "react",
+    "baseUrl": ".",
+    "importHelpers": true,
+    "noEmit": true,
     "emitDeclarationOnly": true,
-    "noEmitOnError": true
+    "resolveJsonModule": true
   }
 }
