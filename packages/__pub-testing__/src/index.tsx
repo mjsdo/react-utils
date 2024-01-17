@@ -2,6 +2,8 @@ import React from 'react';
 
 import { Count } from './count';
 
-export const PubTesting = () => {
-  return <Count initialValue={1} />;
+const PubTesting = () => {
+  return <Count initialValue={2} />;
 };
+
+export { Count, PubTesting };
