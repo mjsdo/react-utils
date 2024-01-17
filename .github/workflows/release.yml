@@ -44,11 +44,12 @@ jobs:
         if: steps.yarnCache.outputs.cache-hit != 'true'
         run: yarn install --immutable
 
-      - name: Enable affected command
+      - name: Derive appropriate SHAs for base and head for `nx affected` commands
+        id: setSHAs
         uses: nrwl/nx-set-shas@v4
-
-      # https://nx.dev/ci/recipes/set-up/monorepo-ci-github-actions#process-only-affected-projects-with-one-job-on-github-actions
-      - run: git branch --track main origin/main
+      - run: |
+          echo "BASE: ${{ steps.setSHAs.outputs.base }}"
+          echo "HEAD: ${{ steps.setSHAs.outputs.head }}"
 
       - name: Build
         run: yarn build:packages --configuration=ci
