@@ -8,6 +8,13 @@
     },
     "lint": {
       "cache": true
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "cache": true,
+      "options": {
+        "jestConfig": "{workspaceRoot}/jest.config.js"
+      }
     }
   },
   "nxCloudAccessToken": "YWI1N2U0OGMtNDU5NC00YjZiLWIyZTUtZGUzZDU0NTc1MTkwfHJlYWQtd3JpdGU=",
