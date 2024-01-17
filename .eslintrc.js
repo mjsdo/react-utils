@@ -9,17 +9,16 @@ module.exports = {
   parser: '@typescript-eslint/parser',
   overrides: [
     {
-      files: ['**/*.ts', '**/*.js'],
+      files: ['**/*.{j,t}s?(x)'],
       extends: ['plugin:@mjsdo/common'],
     },
     {
-      files: ['**/*.ts', '**/*.tsx'],
+      files: ['**/*.ts?(x)'],
       extends: ['plugin:@mjsdo/typescript'],
     },
     {
-      files: ['**/*.jsx', '**/*.tsx'],
+      files: ['**/*.{j,t}sx'],
       extends: [
-        'react-app',
         'plugin:react-hooks/recommended',
         'plugin:jsx-a11y/recommended',
       ],
