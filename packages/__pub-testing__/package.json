@@ -24,7 +24,8 @@
   },
   "scripts": {
     "clean": "rimraf dist",
-    "build": "yarn clean && parcel build"
+    "build": "yarn clean && parcel build",
+    "test": "vitest --watch=false"
   },
   "files": [
     "README.md",

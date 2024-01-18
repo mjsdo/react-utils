@@ -8,6 +8,13 @@
     },
     "lint": {
       "cache": true
+    },
+    "test": {
+      "executor": "@nx/vite:test",
+      "cache": true,
+      "options": {
+        "configFile": "{workspaceRoot}/vitest.config.mts"
+      }
     }
   },
   "nxCloudAccessToken": "YWI1N2U0OGMtNDU5NC00YjZiLWIyZTUtZGUzZDU0NTc1MTkwfHJlYWQtd3JpdGU=",
