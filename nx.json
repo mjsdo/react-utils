@@ -13,8 +13,7 @@
       "executor": "@nx/vite:test",
       "cache": true,
       "options": {
-        "configFile": "{workspaceRoot}/vitest.config.mts",
-        "watch": true
+        "configFile": "{workspaceRoot}/vitest.config.mts"
       }
     }
   },
