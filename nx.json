@@ -10,10 +10,11 @@
       "cache": true
     },
     "test": {
-      "executor": "@nx/jest:jest",
+      "executor": "@nx/vite:test",
       "cache": true,
       "options": {
-        "jestConfig": "{workspaceRoot}/jest.config.js"
+        "configFile": "{workspaceRoot}/vitest.config.mts",
+        "watch": true
       }
     }
   },
