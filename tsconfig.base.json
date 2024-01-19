@@ -18,6 +18,7 @@
     "jsx": "react",
     "baseUrl": ".",
     "importHelpers": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "types": ["@testing-library/cypress", "cypress"]
   }
 }
