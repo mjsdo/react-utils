@@ -1,3 +1,3 @@
-import { vitestBaseConfig } from '../../scripts/vitestBaseConfig';
+import { vitestBaseConfig } from '../../configs/vitestBaseConfig';
 
 export default vitestBaseConfig;
