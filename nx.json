@@ -13,12 +13,14 @@
       "executor": "@nx/vite:test",
       "cache": true,
       "options": {
-        "configFile": "{workspaceRoot}/vitest.config.mts"
+        "configFile": "{projectRoot}/vitest.config.mts"
       }
+    },
+    "cy:component-test": {
+      "executor": "@nx/cypress:cypress"
     }
   },
   "nxCloudAccessToken": "YWI1N2U0OGMtNDU5NC00YjZiLWIyZTUtZGUzZDU0NTc1MTkwfHJlYWQtd3JpdGU=",
-
   "namedInput": {
     "default": ["{projectRoot}/**/*", "sharedGlobals"],
     "sharedGlobals": ["{workspaceRoot}/.github/workflows/release.yml"]

@@ -23,6 +23,16 @@ module.exports = {
         'plugin:jsx-a11y/recommended',
       ],
     },
+    {
+      files: ['**/*.{cy|e2e}.{js,jsx,ts,tsx}'],
+      extends: ['plugin:cypress/recommended'],
+      env: {
+        'cypress/globals': true,
+      },
+      rules: {
+        'cypress/unsafe-to-chain-command': 'off',
+      },
+    },
   ],
   settings: {
     'import/resolver': {
