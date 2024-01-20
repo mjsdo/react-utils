@@ -5,11 +5,11 @@
   "private": true,
   "scripts": {
     "build:esm-declaration": "node ./scripts/createEsmDeclarations.js",
-    "build:packages": "nx affected -t build && yarn build:esm-declaration",
+    "build": "nx affected -t build && yarn build:esm-declaration",
+    "build:all": "nx run-many -t build && yarn build:esm-declaration",
     "version:packages": "changeset version",
     "release:packages": "changeset publish",
     "test": "nx affected -t test",
-    "test:all": "nx run-many -t test",
     "cy:open": "cypress open",
     "cy:component": "nx affected -t cy:component",
     "storybook": "storybook dev -p 6006",

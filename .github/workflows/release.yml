@@ -54,7 +54,7 @@ jobs:
           echo "HEAD: ${{ steps.setSHAs.outputs.head }}"
 
       - name: Build
-        run: yarn build:packages --configuration=ci
+        run: yarn build --configuration=ci
 
       - name: Create Release Pull Request or Publish to npm
         uses: changesets/action@v1
