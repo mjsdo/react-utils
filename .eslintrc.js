@@ -39,4 +39,5 @@ module.exports = {
       typescript: {},
     },
   },
+  extends: ['plugin:storybook/recommended'],
 };
