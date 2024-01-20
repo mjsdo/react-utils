@@ -1,12 +1,9 @@
 import { resolve } from 'node:path';
 
-import { findUpSync } from 'find-up';
+import findWorkspaceRoot from 'find-yarn-workspace-root';
 import { defineConfig } from 'vitest/config';
 
-const rootDir = (findUpSync('nx.json') as string).replace(
-  /(.*)([\/\\])nx.json$/,
-  '$1'
-);
+const rootDir = findWorkspaceRoot() as string;
 
 export const vitestBaseConfig = defineConfig({
   test: {

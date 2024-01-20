@@ -8,10 +8,10 @@
     "build:packages": "nx affected -t build && yarn build:esm-declaration",
     "version:packages": "changeset version",
     "release:packages": "changeset publish",
-    "test:packages": "nx affected -t test",
+    "test": "nx affected -t test",
     "test:all": "nx run-many -t test",
     "cy:open": "cypress open",
-    "cy:component": "cypress run --component"
+    "cy:component": "nx affected -t cy:component"
   },
   "devDependencies": {
     "@changesets/changelog-github": "^0.5.0",
@@ -28,6 +28,7 @@
     "@testing-library/jest-dom": "^6.2.0",
     "@testing-library/react": "^14.1.2",
     "@types/eslint": "^8",
+    "@types/find-pkg-dir": "^2",
     "@types/fs-extra": "^11",
     "@types/node": "^20.11.5",
     "@types/react": "^18.2.48",
@@ -45,7 +46,8 @@
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-jsx-a11y": "^6.8.0",
     "eslint-plugin-react-hooks": "^4.6.0",
-    "find-up": "^7.0.0",
+    "find-pkg-dir": "^2.0.0",
+    "find-yarn-workspace-root": "^2.0.0",
     "fs-extra": "^11.2.0",
     "glob": "^10.3.10",
     "jsdom": "^23.2.0",
@@ -56,6 +58,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "rimraf": "^5.0.5",
+    "ts-node": "^10.9.2",
     "typescript": "^5.3.3",
     "vite": "^5.0.11",
     "vite-tsconfig-paths": "^4.3.1",

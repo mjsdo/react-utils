@@ -16,7 +16,7 @@
         "configFile": "{projectRoot}/vitest.config.mts"
       }
     },
-    "cy:component-test": {
+    "cy:component": {
       "executor": "@nx/cypress:cypress"
     }
   },
