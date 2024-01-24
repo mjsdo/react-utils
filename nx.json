@@ -17,6 +17,7 @@
       }
     },
     "cy:component": {
+      "cache": true,
       "executor": "@nx/cypress:cypress"
     }
   },
