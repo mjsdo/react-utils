@@ -2757,6 +2757,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@mjsdo/react-component-stack@workspace:packages/component-stack":
+  version: 0.0.0-use.local
+  resolution: "@mjsdo/react-component-stack@workspace:packages/component-stack"
+  peerDependencies:
+    react: ^17.0 || ^18.0
+    react-dom: ^17.0 || ^18.0
+  languageName: unknown
+  linkType: soft
+
 "@msgpackr-extract/msgpackr-extract-darwin-arm64@npm:3.0.2":
   version: 3.0.2
   resolution: "@msgpackr-extract/msgpackr-extract-darwin-arm64@npm:3.0.2"
