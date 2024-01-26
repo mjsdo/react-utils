@@ -78,7 +78,7 @@ const useComponentStacks = () => {
 
         return {
           ...prev,
-          [stackKey]: prevStack.filter((_, index) => index === targetIndex),
+          [stackKey]: prevStack.filter((_, index) => index !== targetIndex),
         };
       });
     },
