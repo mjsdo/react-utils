@@ -23,7 +23,11 @@ module.exports = {
       extends: ['plugin:@mjsdo/typescript'],
     },
     {
-      files: ['**/*.{cy|e2e}.{js,jsx,ts,tsx}'],
+      files: ['**/*.stories.{j,t}s?(x)'],
+      extends: ['plugin:storybook/recommended'],
+    },
+    {
+      files: ['**/*.{cy,e2e}.{j,t}s?(x)'],
       extends: ['plugin:cypress/recommended'],
       env: {
         'cypress/globals': true,
@@ -38,5 +42,4 @@ module.exports = {
       typescript: {},
     },
   },
-  extends: ['plugin:storybook/recommended'],
 };
