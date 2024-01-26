@@ -6,7 +6,7 @@
     "type": "git",
     "url": "git+https://github.com/mjsdo/react-utils.git"
   },
-  "source": "./src/index.tsx",
+  "source": "./src/index.ts",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "module": "./dist/index.mjs",
@@ -32,6 +32,9 @@
     "README.md",
     "dist"
   ],
+  "dependencies": {
+    "@radix-ui/react-context": "^1.0.1"
+  },
   "peerDependencies": {
     "react": "^17.0 || ^18.0",
     "react-dom": "^17.0 || ^18.0"

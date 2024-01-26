@@ -4170,7 +4170,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@radix-ui/react-context@npm:1.0.1":
+"@radix-ui/react-context@npm:1.0.1, @radix-ui/react-context@npm:^1.0.1":
   version: 1.0.1
   resolution: "@radix-ui/react-context@npm:1.0.1"
   dependencies:
@@ -15030,6 +15030,7 @@ __metadata:
     "@nx/vite": "npm:^17.2.8"
     "@parcel/packager-ts": "npm:2.11.0"
     "@parcel/transformer-typescript-types": "npm:2.11.0"
+    "@radix-ui/react-context": "npm:^1.0.1"
     "@storybook/addon-essentials": "npm:^7.6.10"
     "@storybook/addon-interactions": "npm:^7.6.10"
     "@storybook/addon-links": "npm:^7.6.10"
