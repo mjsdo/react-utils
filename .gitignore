@@ -55,3 +55,6 @@ Thumbs.db
 
 # test-reports
 reports/
+
+# env
+.env*

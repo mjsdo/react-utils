@@ -50,6 +50,7 @@
     "@vitejs/plugin-react": "^4.2.1",
     "@vitest/coverage-v8": "^1.2.1",
     "@vitest/ui": "^1.2.1",
+    "chromatic": "^10.6.1",
     "cypress": "^13.6.3",
     "eslint": "^8.56.0",
     "eslint-config-react-app": "^7.0.1",

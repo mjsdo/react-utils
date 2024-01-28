@@ -8376,6 +8376,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"chromatic@npm:^10.6.1":
+  version: 10.6.1
+  resolution: "chromatic@npm:10.6.1"
+  peerDependencies:
+    chromatic-cypress: ^0.4.0 || ^1.0.0
+    chromatic-playwright: ^0.4.0 || ^1.0.0
+  peerDependenciesMeta:
+    chromatic-cypress:
+      optional: true
+    chromatic-playwright:
+      optional: true
+  bin:
+    chroma: dist/bin.js
+    chromatic: dist/bin.js
+    chromatic-cli: dist/bin.js
+  checksum: 5215b8267265437c1f9f27370162422a4187799f768906d9959da1ba8ada12cbbd554e46914201c745a6bb6c2a52835af9cc8bd9634cdd5df23127b08844dc97
+  languageName: node
+  linkType: hard
+
 "chrome-trace-event@npm:^1.0.2, chrome-trace-event@npm:^1.0.3":
   version: 1.0.3
   resolution: "chrome-trace-event@npm:1.0.3"
@@ -15261,6 +15280,7 @@ __metadata:
     "@vitejs/plugin-react": "npm:^4.2.1"
     "@vitest/coverage-v8": "npm:^1.2.1"
     "@vitest/ui": "npm:^1.2.1"
+    chromatic: "npm:^10.6.1"
     cypress: "npm:^13.6.3"
     eslint: "npm:^8.56.0"
     eslint-config-react-app: "npm:^7.0.1"
