@@ -25,8 +25,7 @@
   "scripts": {
     "clean": "rimraf dist",
     "build": "yarn clean && parcel build",
-    "test": "vitest --watch=false",
-    "cy:component": "cypress run --component"
+    "test": "vitest --watch=false"
   },
   "files": [
     "README.md",

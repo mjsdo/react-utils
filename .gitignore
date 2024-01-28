@@ -52,3 +52,6 @@ Thumbs.db
 
 # Bundler
 .parcel-cache
+
+# test-reports
+reports/
