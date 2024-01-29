@@ -34,6 +34,8 @@ yarn-error.log
 testem.log
 /typings
 build-storybook.log*
+storybook-static
+tsconfig.tsbuildinfo
 
 # System Files
 .DS_Store
@@ -52,3 +54,10 @@ Thumbs.db
 
 # Bundler
 .parcel-cache
+
+# test-reports
+reports/
+
+# env
+.env*
+
