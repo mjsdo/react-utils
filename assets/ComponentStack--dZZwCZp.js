@@ -1,4 +1,4 @@
-import{j as n,a as t,F as s}from"./jsx-runtime-1H0H8r1V.js";import{M as r,b as c}from"./index-D_dKYYsW.js";import{C as d,B as p,R as l}from"./ComponentStack.stories-jim9YK8o.js";import{useMDXComponents as a}from"./index-RF8qTkjN.js";import"./index-FaLGlFNx.js";import"./_commonjsHelpers-4gQjN7DL.js";import"./iframe-9jtpU3vm.js";import"../sb-preview/runtime.js";import"./index-gMreU1aJ.js";import"./index-ogXoivrg.js";import"./extends-dGVwEr9R.js";import"./index-MVbLLYTZ.js";import"./index-PPLHz8o0.js";function i(o){const e=Object.assign({h1:"h1",code:"code",p:"p",pre:"pre",h2:"h2",strong:"strong",hr:"hr",h3:"h3"},a(),o.components);return t(s,{children:[n(r,{of:d}),`
+import{j as n,a as t,F as s,C as r,B as d,R as p}from"./ComponentStack.stories-X4iu37gd.js";import{M as l,b as c}from"./index-fpDBG9WI.js";import{useMDXComponents as a}from"./index-RF8qTkjN.js";import"./index-FaLGlFNx.js";import"./_commonjsHelpers-4gQjN7DL.js";import"./extends-dGVwEr9R.js";import"./index-gMreU1aJ.js";import"./iframe-yHxchISv.js";import"../sb-preview/runtime.js";import"./index-ogXoivrg.js";import"./index-MVbLLYTZ.js";import"./index-PPLHz8o0.js";function i(o){const e=Object.assign({h1:"h1",code:"code",p:"p",pre:"pre",h2:"h2",strong:"strong",hr:"hr",h3:"h3"},a(),o.components);return t(s,{children:[n(l,{of:r}),`
 `,n(e.h1,{id:"component-stack",children:n(e.code,{children:"component-stack"})}),`
 `,n(e.p,{children:"컴포넌트를 쌓기위한 컴포넌트"}),`
 `,n("br",{}),`
@@ -18,7 +18,7 @@ import{j as n,a as t,F as s}from"./jsx-runtime-1H0H8r1V.js";import{M as r,b as c
 `})}),`
 `,n(e.h1,{id:"examples",children:"Examples"}),`
 `,n(e.h2,{id:"basic-example",children:"Basic Example"}),`
-`,n(c,{of:p}),`
+`,n(c,{of:d}),`
 `,n(e.pre,{children:n(e.code,{className:"language-tsx",children:`// app.tsx
 import {
   ComponentStackProvider,
@@ -72,7 +72,7 @@ const BasicExample = () => {
 };
 `})}),`
 `,n(e.h2,{id:"dialog-stack-example",children:"Dialog Stack Example"}),`
-`,n(c,{of:l}),`
+`,n(c,{of:p}),`
 `,n(e.pre,{children:n(e.code,{className:"language-tsx",children:`// app.tsx
 import {
   ComponentStackProvider,
@@ -211,4 +211,4 @@ push('stackKey', {
 `,n(e.h3,{id:"pop",children:"pop"}),`
 `,n(e.pre,{children:n(e.code,{className:"language-tsx",children:"// `stackKey`에 해당하는 스택에서 가장 마지막에 `push`한 아이템을 제거\npop('stackKey');\n"})}),`
 `,n(e.h3,{id:"remove",children:"remove"}),`
-`,n(e.pre,{children:n(e.code,{className:"language-tsx",children:"// `stackKey`에 해당하는 스택에서 조건에 맞는 아이템중 가장 일찍 `push`했던 아이템을 제거\n// 동일한 조건을 만족하는 아이템이 여러개 있어도 1개만 제거된다.\nremove('stackKey', ({ id, node }) => id === '1');\n"})})]})}function P(o={}){const{wrapper:e}=Object.assign({},a(),o.components);return e?n(e,Object.assign({},o,{children:n(i,o)})):i(o)}export{P as default};
+`,n(e.pre,{children:n(e.code,{className:"language-tsx",children:"// `stackKey`에 해당하는 스택에서 조건에 맞는 아이템중 가장 일찍 `push`했던 아이템을 제거\n// 동일한 조건을 만족하는 아이템이 여러개 있어도 1개만 제거된다.\nremove('stackKey', ({ id, node }) => id === '1');\n"})})]})}function f(o={}){const{wrapper:e}=Object.assign({},a(),o.components);return e?n(e,Object.assign({},o,{children:n(i,o)})):i(o)}export{f as default};
