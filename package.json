@@ -13,8 +13,8 @@
     "cy:open": "cypress open",
     "cy:component": "nx affected -t cy:component",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build",
-    "deploy:storybook": "rimraf storybook-static && yarn build-storybook && gh-pages -d storybook-static",
+    "build:storybook": "storybook build",
+    "deploy:storybook": "rimraf storybook-static && yarn build:storybook && touch ./storybook-static/.nojekyll && gh-pages -d ./storybook-static -t true",
     "type": "tsc --noEmit"
   },
   "devDependencies": {
