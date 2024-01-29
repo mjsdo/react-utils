@@ -51,6 +51,7 @@ const DialogOverlay = () => {
     <div
       style={{
         position: 'fixed',
+        zIndex: 1,
         inset: 0,
         background: 'rgba(0, 0, 0, 0.5)',
       }}
@@ -73,6 +74,7 @@ const DialogDepth1 = () => {
       <div
         style={{
           position: 'fixed',
+          zIndex: 1,
           inset: 40,
           background: 'darkgoldenrod',
         }}
@@ -103,6 +105,7 @@ const DialogDepth2 = ({ onClickClose }: { onClickClose: () => void }) => {
       <div
         style={{
           position: 'fixed',
+          zIndex: 1,
           inset: 80,
           background: 'darkgoldenrod',
           textAlign: 'right',
@@ -166,6 +169,7 @@ const RadixDialogDepth1 = () => {
             background: 'rgba(0, 0, 0, 0.5)',
             inset: 0,
             position: 'fixed',
+            zIndex: 1,
           }}
         />
 
@@ -176,6 +180,7 @@ const RadixDialogDepth1 = () => {
             background: 'darkgoldenrod',
             inset: 40,
             position: 'fixed',
+            zIndex: 1,
           }}
         >
           <div
@@ -206,6 +211,7 @@ const RadixDialogDepth2 = ({ onClose }: { onClose: () => void }) => {
             background: 'rgba(0, 0, 0, 0.5)',
             inset: 0,
             position: 'fixed',
+            zIndex: 1,
           }}
         />
 
@@ -216,6 +222,7 @@ const RadixDialogDepth2 = ({ onClose }: { onClose: () => void }) => {
             background: 'darkgoldenrod',
             inset: 80,
             position: 'fixed',
+            zIndex: 1,
             textAlign: 'right',
           }}
         >

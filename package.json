@@ -13,7 +13,9 @@
     "cy:open": "cypress open",
     "cy:component": "nx affected -t cy:component",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "deploy:storybook": "rimraf storybook-static && yarn build-storybook && gh-pages -d storybook-static",
+    "type": "tsc --noEmit"
   },
   "devDependencies": {
     "@changesets/changelog-github": "^0.5.0",
@@ -42,6 +44,7 @@
     "@types/eslint": "^8",
     "@types/find-pkg-dir": "^2",
     "@types/fs-extra": "^11",
+    "@types/gh-pages": "^6",
     "@types/node": "^20.11.5",
     "@types/react": "^18.2.48",
     "@types/react-dom": "^18.2.18",
@@ -63,6 +66,7 @@
     "find-pkg-dir": "^2.0.0",
     "find-yarn-workspace-root": "^2.0.0",
     "fs-extra": "^11.2.0",
+    "gh-pages": "^6.1.1",
     "glob": "^10.3.10",
     "jsdom": "^23.2.0",
     "load-pkg": "^4.0.0",
