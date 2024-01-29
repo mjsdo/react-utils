@@ -30,6 +30,60 @@ export default meta;
 
 /* --------------- Examples --------------- */
 
+/*** Basic Stack ***/
+
+const BasicStackExample = () => {
+  const { push, pop, remove } = useSetComponentStack();
+  const onPush = () => {
+    push('basic', {
+      node: ({ id }) => (
+        <div>
+          Auto generated item id:
+          <strong style={{ color: 'blue' }}>{id}</strong>
+        </div>
+      ),
+    });
+  };
+  const onPop = () => {
+    pop('basic');
+  };
+  const onRemove = () => {
+    remove('basic', () => true);
+  };
+
+  return (
+    <>
+      <button type="button" onClick={onPush}>
+        Push
+      </button>
+      <button type="button" onClick={onPop}>
+        Pop
+      </button>
+      <button type="button" onClick={onRemove}>
+        Remove first item
+      </button>
+    </>
+  );
+};
+
+export const BasicStackStory: StoryObj = {
+  name: 'Basic Stack',
+  decorators: [
+    (Story) => {
+      return (
+        <>
+          <Story />
+          <ComponentStack stackKey="basic" />
+        </>
+      );
+    },
+  ],
+
+  render: () => {
+    return <BasicStackExample />;
+  },
+};
+
 /*** Dialog Stack ***/
 const DialogStackExample = () => {
   const { push } = useSetComponentStack();
@@ -119,7 +173,7 @@ const DialogDepth2 = ({ onClickClose }: { onClickClose: () => void }) => {
   );
 };
 
-export const Example1: StoryObj = {
+export const DialogStackStory: StoryObj = {
   name: 'Dialog Stack',
   decorators: [
     (Story) => {
@@ -235,7 +289,7 @@ const RadixDialogDepth2 = ({ onClose }: { onClose: () => void }) => {
   );
 };
 
-export const Example2: StoryObj = {
+export const RadixDialogStackStory: StoryObj = {
   name: 'Dialog Stack (@radix-ui/dialog)',
   decorators: [
     (Story) => {

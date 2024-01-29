@@ -33,9 +33,65 @@ import {
 
 ## Basic Example
 
+<Story of={ComponentStackStories.BasicStackStory} />
+
+```tsx
+// app.tsx
+import {
+  ComponentStackProvider,
+  ComponentStack,
+} from '@mjsdo/react-component-stack';
+import { BasicExample } from './basic-example';
+
+const App = () => {
+  return (
+    <ComponentStackProvider>
+      <BasicExample />
+      <ComponentStack stackKey="basic" />
+    </ComponentStackProvider>
+  );
+};
+
+// basic-example.tsx
+import { useSetComponentStack } from '@mjsdo/react-component-stack';
+
+const BasicExample = () => {
+  const { push, pop, remove } = useSetComponentStack();
+  const onPush = () => {
+    push('basic', {
+      node: ({ id }) => (
+        <div>
+          Auto generated item id:
+          <strong style={{ color: 'blue' }}>{id}</strong>
+        </div>
+      ),
+    });
+  };
+  const onPop = () => {
+    pop('basic');
+  };
+  const onRemove = () => {
+    remove('basic', () => true);
+  };
+  return (
+    <>
+      <button type="button" onClick={onPush}>
+        Push
+      </button>
+      <button type="button" onClick={onPop}>
+        Pop
+      </button>
+      <button type="button" onClick={onRemove}>
+        Remove first item
+      </button>
+    </>
+  );
+};
+```
+
 ## Dialog Stack Example
 
-<Story of={ComponentStackStories.Example2} />
+<Story of={ComponentStackStories.RadixDialogStackStory} />
 
 ```tsx
 // app.tsx
