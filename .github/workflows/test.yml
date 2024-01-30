@@ -64,3 +64,4 @@ jobs:
           files: |
             reports/**/*.vitest.xml
             reports/**/*.cy.xml
+            reports/**/*.e2e.xml

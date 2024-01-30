@@ -1,5 +1,6 @@
 import { resolve } from 'node:path';
 
+import { nxE2EPreset } from '@nx/cypress/plugins/cypress-preset';
 import { nxComponentTestingPreset } from '@nx/react/plugins/component-testing';
 import { defineConfig } from 'cypress';
 import findPkgDir from 'find-pkg-dir';
@@ -8,6 +9,10 @@ import findWorkspaceRoot from 'find-yarn-workspace-root';
 import { getPkgName } from '../utils/getPkgName';
 
 export const nxCypressComponentConfig = nxComponentTestingPreset(__filename, {
+  bundler: 'vite',
+});
+
+export const nxCypressE2EConfig = nxE2EPreset(__filename, {
   bundler: 'vite',
 });
 
@@ -30,6 +35,20 @@ export const nxCypressConfig = (dirname: string) => {
         resolve(pkgDir, './packages/**/*.cy.{ts,tsx,js,jsx}'),
         resolve(pkgDir, './src/**/*.cy.{ts,tsx,js,jsx}'),
         resolve(pkgDir, './cypress/**/*.cy.{ts,tsx,js,jsx}'),
+      ],
+    },
+    e2e: {
+      ...nxCypressE2EConfig,
+      baseUrl: 'http://localhost:6006',
+      reporter: 'junit',
+      reporterOptions: {
+        mochaFile: resolve(rootDir, './reports', `${pkgName}.e2e.xml`),
+      },
+      supportFile: resolve(rootDir, './cypress/support/component.ts'),
+      specPattern: [
+        resolve(pkgDir, './packages/**/*.e2e.{ts,tsx,js,jsx}'),
+        resolve(pkgDir, './src/**/*.e2e.{ts,tsx,js,jsx}'),
+        resolve(pkgDir, './cypress/**/*.e2e.{ts,tsx,js,jsx}'),
       ],
     },
   });
