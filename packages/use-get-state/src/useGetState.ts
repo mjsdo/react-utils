@@ -1,17 +1,20 @@
 import type { Dispatch, SetStateAction } from 'react';
 
-type UseGetState = <T = unknown>(
-  setter: Dispatch<SetStateAction<T>>
-) => Promise<T>;
+import { useCallback } from 'react';
 
-const useGetState: UseGetState = (setter) => {
-  return new Promise((resolve) => {
-    setter((state) => {
-      resolve(state);
-      return state;
-    });
-  });
+const useGetState = <T>(setter: Dispatch<SetStateAction<T>>) => {
+  const getState = useCallback(
+    () =>
+      new Promise<T>((resolve) => {
+        setter((state) => {
+          resolve(state);
+          return state;
+        });
+      }),
+    [setter]
+  );
+
+  return getState;
 };
 
 export { useGetState };
-export type { UseGetState };
