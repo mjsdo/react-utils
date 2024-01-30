@@ -25,7 +25,6 @@
   "scripts": {
     "clean": "rimraf dist",
     "build": "yarn clean && parcel build",
-    "cy:component": "cypress run --component",
     "cy:e2e": "cypress run"
   },
   "files": [
