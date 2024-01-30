@@ -19,6 +19,10 @@
     "cy:component": {
       "cache": true,
       "executor": "@nx/cypress:cypress"
+    },
+    "cy:e2e": {
+      "cache": true,
+      "executor": "@nx/cypress:cypress"
     }
   },
   "nxCloudAccessToken": "YWI1N2U0OGMtNDU5NC00YjZiLWIyZTUtZGUzZDU0NTc1MTkwfHJlYWQtd3JpdGU=",
