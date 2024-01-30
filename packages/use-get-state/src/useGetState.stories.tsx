@@ -108,12 +108,12 @@ const GetCountResult = () => {
 
       <div>
         <span>Count: </span>
-        <span ref={countRef} />
+        <span data-cy="count" ref={countRef} />
       </div>
 
       <div>
         <span>Render: </span>
-        <span ref={renderCountRef} />
+        <span ref={renderCountRef} data-cy="render-count" />
       </div>
     </div>
   );
@@ -143,12 +143,12 @@ const Count = () => {
 
       <div>
         <span>Count: </span>
-        <span>{count}</span>
+        <span data-cy="count">{count}</span>
       </div>
 
       <div>
         <span>Render: </span>
-        <span ref={renderCountRef} />
+        <span ref={renderCountRef} data-cy="render-count" />
       </div>
     </div>
   );
