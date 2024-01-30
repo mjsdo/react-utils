@@ -1,5 +1,11 @@
 # @mjsdo/react-component-stack
 
+## 0.1.1
+
+### Patch Changes
+
+- [#16](https://github.com/mjsdo/react-utils/pull/16) [`20b2277`](https://github.com/mjsdo/react-utils/commit/20b22773508139c4a06cc3956721305145ad7b67) Thanks [@mjsdo](https://github.com/mjsdo)! - update readme
+
 ## 0.1.0
 
 ### Minor Changes
