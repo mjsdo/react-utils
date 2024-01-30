@@ -25,8 +25,7 @@
   },
   "scripts": {
     "clean": "rimraf dist",
-    "build": "yarn clean && parcel build && node ./scripts/createEsmDeclaration.js",
-    "test": "vitest --watch=false"
+    "build": "yarn clean && parcel build && node ./scripts/createEsmDeclaration.js"
   },
   "peerDependencies": {
     "react": "^17.0 || ^18.0",
