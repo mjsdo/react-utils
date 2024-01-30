@@ -1,13 +1,12 @@
 {
-  "name": "@mjsdo/pub-testing",
-  "version": "0.0.1",
+  "name": "@mjsdo/react-use-get-state",
+  "version": "0.0.0",
   "license": "MIT",
-  "private": true,
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mjsdo/react-utils.git"
   },
-  "source": "./src/index.tsx",
+  "source": "./src/index.ts",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "module": "./dist/index.mjs",
@@ -26,13 +25,15 @@
   "scripts": {
     "clean": "rimraf dist",
     "build": "yarn clean && parcel build",
-    "test": "vitest --watch=false",
-    "cy:component": "cypress run --component"
+    "cy:e2e": "cypress run"
   },
   "files": [
     "README.md",
     "dist"
   ],
+  "devDependencies": {
+    "@mjsdo/shared-dev": "workspace:*"
+  },
   "peerDependencies": {
     "react": "^17.0 || ^18.0",
     "react-dom": "^17.0 || ^18.0"

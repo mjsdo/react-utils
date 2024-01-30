@@ -1,13 +1,13 @@
 {
-  "name": "@mjsdo/pub-testing",
-  "version": "0.0.1",
-  "license": "MIT",
+  "name": "@mjsdo/shared-dev",
   "private": true,
+  "version": "0.0.0",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mjsdo/react-utils.git"
   },
-  "source": "./src/index.tsx",
+  "source": "./src/index.ts",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "module": "./dist/index.mjs",
@@ -25,14 +25,8 @@
   },
   "scripts": {
     "clean": "rimraf dist",
-    "build": "yarn clean && parcel build",
-    "test": "vitest --watch=false",
-    "cy:component": "cypress run --component"
+    "build": "yarn clean && parcel build && node ./scripts/createEsmDeclaration.js"
   },
-  "files": [
-    "README.md",
-    "dist"
-  ],
   "peerDependencies": {
     "react": "^17.0 || ^18.0",
     "react-dom": "^17.0 || ^18.0"

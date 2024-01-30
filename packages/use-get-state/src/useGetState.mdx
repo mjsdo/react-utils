@@ -1,0 +1,232 @@
+import { Meta, Story } from '@storybook/blocks';
+
+import * as UseGetStateStories from './useGetState.stories';
+
+<Meta of={UseGetStateStories} />
+
+# `use-get-state`
+
+구독하지 않고 최신 상태를 읽기 위한 커스텀 훅  
+react-hook-form의 getValues API와 비슷함
+
+<br />
+
+# Installation
+
+```bash
+
+yarn add @mjsdo/react-use-get-state
+
+```
+
+# Usage
+
+```tsx
+import { useGetState } from '@mjsdo/react-use-get-state';
+
+const [, setNum] = useState(1);
+
+const getNum = useGetState(setNum);
+
+const handleSubmit = async () => {
+  console.log(await getNum()); // 1
+
+  setNum((c) => c + 1);
+
+  console.log(await getNum()); // 2
+
+  setNum(111);
+
+  console.log(await getNum()); // 111
+};
+```
+
+# Examples
+
+## Count Example
+
+<Story of={UseGetStateStories.CountStory} />
+
+```tsx
+const CountExample = () => {
+  return (
+    <CountProvider>
+      <Count />
+      <GetCountResult />
+    </CountProvider>
+  );
+};
+
+const Count = () => {
+  const count = useCount();
+  const setCount = useSetCount();
+  const renderCountRef = useRef();
+
+  const increase = () => setCount((c) => c + 1);
+
+  useEffect(() => {
+    if (!renderCountRef.current) return;
+
+    const $renderCount = renderCountRef.current;
+    $renderCount.textContent = String(
+      (Number($renderCount.textContent) ?? -1) + 1
+    );
+  });
+
+  return (
+    <div>
+      <h2>Count 구독 한 컴포넌트</h2>
+      <button type="button" onClick={increase}>
+        Count 1 증가시키기
+      </button>
+      <div>
+        <span>Count: </span>
+        <span>{count}</span>
+      </div>
+
+      <div>
+        <span>Render: </span>
+        <span ref={renderCountRef} />
+      </div>
+    </div>
+  );
+};
+
+const GetCountResult = () => {
+  const getCount = useGetCount();
+
+  const renderCountRef = useRef<HTMLSpanElement>(null);
+  const countRef = useRef<HTMLSpanElement>(null);
+
+  const drawGetCountResult = async () => {
+    if (!countRef.current) return;
+    const $count = countRef.current;
+
+    const count = await getCount();
+    $count.textContent = String(count);
+  };
+
+  useEffect(() => {
+    if (!renderCountRef.current) return;
+
+    const $renderCount = renderCountRef.current;
+    $renderCount.textContent = String(
+      (Number($renderCount.textContent) ?? -1) + 1
+    );
+  });
+
+  return (
+    <div>
+      <h2>Count 구독 안한 컴포넌트</h2>
+
+      <button type="button" onClick={drawGetCountResult}>
+        현재 Count 반영하기
+      </button>
+
+      <div>
+        <span>Count: </span>
+        <span ref={countRef} />
+      </div>
+
+      <div>
+        <span>Render: </span>
+        <span ref={renderCountRef} />
+      </div>
+    </div>
+  );
+};
+```
+
+## Form Example
+
+<Story of={UseGetStateStories.FormStory} />
+
+```tsx
+const App = () => {
+  return (
+    <FormProvider>
+      <Form />
+    </FormProvider>
+  );
+};
+const FormProvider = ({ children }) => {
+  const [id, setId] = useState('');
+  const [pw, setPw] = useState('');
+
+  const getId = useGetState(setId);
+  const getPw = useGetState(setPw);
+
+  return (
+    /** id, pw context 코드 생략*/
+    <GetIdContext.Provider value={getId}>
+      <GetPwContext.Provider value={getPw}>{children}</GetPwContext.Provider>
+    </GetIdContext.Provider>
+  );
+};
+const Form = () => {
+  const getId = useGetId();
+  const getPw = useGetPw();
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    const id = await getId();
+    const pw = await getPw();
+    alert(`id: ${id}, pw: ${pw}`);
+  };
+
+  return (
+    <form>
+      <Id />
+      <Pw />
+      <button type="submit">Submit</button>
+    </form>
+  );
+};
+const Id = () => {
+  const [id, setId] = useId();
+
+  return (
+    <div>
+      <span>id: </span>
+      <input type="text" value={id} onChange={(e) => setId(e.target.value)} />
+    </div>
+  );
+};
+const Pw = () => {
+  const [pw, setPw] = usePw();
+
+  return (
+    <div>
+      <span>id: </span>
+      <input type="text" value={pw} onChange={(e) => setPw(e.target.value)} />
+    </div>
+  );
+};
+```
+
+# API
+
+## `useGetState`
+
+**type: hook**
+
+`getState`를 반환하는 커스텀 훅.
+
+- 파라미터로 `Dispatch<SetStateAction<T>>`타입을 갖는 Setter를 전달해야 한다.
+
+```tsx
+import { useState } from 'react';
+
+import { useGetState } from '@mjsdo/react-use-get-state';
+
+const [, setName] = useState('Name');
+
+const getName = useGetState(setName);
+
+const func = async () => {
+  await getName(); // "Name"
+
+  setName('ABC');
+
+  await getName(); // "ABC"
+};
+```
