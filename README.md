@@ -6,22 +6,33 @@
 
 ## scripts
 
-변경된 패키지만 빌드
+의존성 설치
 
 ```zsh
+yarn
+```
+
+빌드
+
+```zsh
+# 변경된 패키지만 빌드
 yarn build
+
+# 모든 패키지 빌드
+yarn build:all
 ```
 
-변경된 패키지만 테스트 (vitest)
+변경된 패키지만 테스트
 
 ```zsh
+# vitest
 yarn test
-```
 
-변경된 패키지만 테스트 (cypress-component-test)
-
-```zsh
+# cypress-component
 yarn cy:component
+
+# cypress e2e (storybook + cypress)
+yarn cy:e2e
 ```
 
 스토리북 데브서버
@@ -36,8 +47,18 @@ Cypress 데브서버
 yarn cy:open
 ```
 
+Type Check
+
+```zsh
+yarn type
+```
+
 모든 패키지에 대해서 태스크 수행하기
 
 ```zsh
 yarn nx run-many -t <targetTaskName>
 ```
+
+## note
+
+- Cypress headless mode 테스트가 `windows 11`에서 실행되지 않을 수 있음
