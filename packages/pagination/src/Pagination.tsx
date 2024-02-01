@@ -121,9 +121,24 @@ const Pagination = (props: PaginationProps) => {
 
   const renderItem = (page: number) => (
     <Fragment key={page}>
-      {itemUI && itemUI({ ...itemParams, targetPage: page })}
+      {itemUI && (
+        <Slot onClick={() => onPageChange?.(page)}>
+          {itemUI({ ...itemParams, targetPage: page })}
+        </Slot>
+      )}
     </Fragment>
   );
+
+  const handleClickPrevious = (page: number) => () => {
+    const targetPage = page - 1;
+    if (targetPage < firstPage) return;
+    onPageChange?.(clamp(targetPage, clampBoundary));
+  };
+  const handleClickNext = (page: number) => () => {
+    const targetPage = page + 1;
+    if (targetPage > totalPageCount) return;
+    onPageChange?.(clamp(targetPage, clampBoundary));
+  };
 
   return (
     <div className={className}>
@@ -132,20 +147,15 @@ const Pagination = (props: PaginationProps) => {
       ) : (
         <>
           {/* previous */}
-          <Slot
-            onClick={() => {
-              const targetPage = page - 1;
-              if (targetPage < firstPage) return;
 
-              onPageChange?.(clamp(page - 1, clampBoundary));
-            }}
-          >
-            {previousUI &&
-              previousUI({
+          {previousUI && (
+            <Slot onClick={handleClickPrevious(page)}>
+              {previousUI({
                 ...itemParams,
                 targetPage: page - 1,
               })}
-          </Slot>
+            </Slot>
+          )}
 
           {/* left boundary */}
           {range(leftBoundaryStart, leftBoundaryEnd).map(renderItem)}
@@ -179,20 +189,15 @@ const Pagination = (props: PaginationProps) => {
           )}
 
           {/* next */}
-          <Slot
-            onClick={() => {
-              const targetPage = page + 1;
-              if (targetPage > totalPageCount) return;
 
-              onPageChange?.(clamp(page + 1, clampBoundary));
-            }}
-          >
-            {nextUI &&
-              nextUI({
+          {nextUI && (
+            <Slot onClick={handleClickNext(page)}>
+              {nextUI({
                 ...itemParams,
                 targetPage: page + 1,
               })}
-          </Slot>
+            </Slot>
+          )}
         </>
       )}
     </div>
