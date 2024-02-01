@@ -4,6 +4,10 @@ import { clamp } from '@radix-ui/number';
 import { Slot } from '@radix-ui/react-slot';
 import React, { Fragment } from 'react';
 
+const composeClassname = (...args: Array<undefined | boolean | string>) => {
+  return args.filter(Boolean).join(' ');
+};
+
 // [min, min+1, ..., max]
 const range = (min: number, max: number) => {
   if (min > max) return [];
@@ -14,6 +18,13 @@ const range = (min: number, max: number) => {
 };
 
 const firstPage = 1;
+const cn = {
+  item: 'pagination-item',
+  trunc: 'pagination-item__trunc',
+  previous: 'pagination-item__previous',
+  next: 'pagination-item__next',
+  currentPage: 'pagination-item--current-page',
+};
 
 type PaginationItemUI = (params: PaginationItemParams) => ReactElement;
 
@@ -57,20 +68,35 @@ interface PaginationProps {
    */
   truncStep?: number;
 
-  /** 왼쪽 Trunc UI */
+  /**
+   * - 왼쪽 Trunc UI
+   * - 렌더링하지 않으려면 `null`을 전달한다.
+   */
   leftTruncUI?: PaginationItemUI | null;
-  /** 오른쪽 Trunc UI */
+  /**
+   * - 오른쪽 Trunc UI
+   * - 렌더링하지 않으려면 `null`을 전달한다.
+   */
   rightTruncUI?: PaginationItemUI | null;
-  /** 이전 페이지 UI */
+  /**
+   * - 이전 페이지 UI
+   * - 렌더링하지 않으려면 `null`을 전달한다.
+   */
   previousUI?: PaginationItemUI | null;
-  /** 다음 페이지 UI */
+  /**
+   * - 다음 페이지 UI
+   * - 렌더링하지 않으려면 `null`을 전달한다.
+   */
   nextUI?: PaginationItemUI | null;
-  /** 페이지 UI */
+  /**
+   * - 페이지 UI
+   * - 렌더링하지 않으려면 `null`을 전달한다.
+   */
   itemUI?: PaginationItemUI | null;
 
   /**
    * - `page`값이 범위를 벗어났을 때 보여줄 Pagination UI
-   * - 전달하지 않는 경우 기존 Pagination UI가 보임
+   * - 값을 전달하지 않는 경우 기존 Pagination UI가 보임
    */
   invalidFallbackUI?: ReactNode;
 
@@ -99,7 +125,9 @@ const Pagination = (props: PaginationProps) => {
     className,
   } = props;
 
-  const isCurrentPageValid = firstPage <= page && page <= totalPageCount;
+  const isPageValid = (page: number) =>
+    firstPage <= page && page <= totalPageCount;
+  const isCurrentPageValid = isPageValid(page);
   const showFallbackUI = !isCurrentPageValid && invalidFallbackUI;
   const clampBoundary: [number, number] = [firstPage, totalPageCount];
 
@@ -119,85 +147,107 @@ const Pagination = (props: PaginationProps) => {
     lastPage: totalPageCount,
   };
 
-  const renderItem = (page: number) => (
-    <Fragment key={page}>
-      {itemUI && (
-        <Slot onClick={() => onPageChange?.(page)}>
-          {itemUI({ ...itemParams, targetPage: page })}
-        </Slot>
-      )}
-    </Fragment>
-  );
+  const renderItem = (targetPage: number) => {
+    const onClick = () => onPageChange?.(targetPage);
+    const isCurrentPage = targetPage === page;
 
-  const handleClickPrevious = (page: number) => () => {
-    const targetPage = page - 1;
-    if (targetPage < firstPage) return;
-    onPageChange?.(clamp(targetPage, clampBoundary));
+    return (
+      <Fragment key={targetPage}>
+        {itemUI && (
+          <Slot
+            onClick={onClick}
+            className={composeClassname(
+              cn.item,
+              isCurrentPage && cn.currentPage
+            )}
+          >
+            {itemUI({ ...itemParams, targetPage })}
+          </Slot>
+        )}
+      </Fragment>
+    );
   };
-  const handleClickNext = (page: number) => () => {
-    const targetPage = page + 1;
-    if (targetPage > totalPageCount) return;
-    onPageChange?.(clamp(targetPage, clampBoundary));
+  const renderTrunc = (
+    truncUI: PaginationItemUI | null,
+    targetPage: number
+  ) => {
+    return (
+      truncUI && (
+        <Slot
+          onClick={() => onPageChange?.(targetPage)}
+          className={composeClassname(cn.item, cn.trunc)}
+        >
+          {truncUI({
+            ...itemParams,
+            targetPage: targetPage,
+          })}
+        </Slot>
+      )
+    );
+  };
+
+  const renderOneStepNavigation = (
+    navigationUI: PaginationItemUI | null,
+    targetPage: number,
+    itemClassName: string
+  ) => {
+    const onClick = () => {
+      if (isPageValid(targetPage)) return;
+      onPageChange?.(targetPage);
+    };
+
+    return (
+      navigationUI && (
+        <Slot
+          onClick={onClick}
+          className={composeClassname(cn.item, itemClassName)}
+        >
+          {navigationUI({
+            ...itemParams,
+            targetPage,
+          })}
+        </Slot>
+      )
+    );
   };
 
   return (
-    <div className={className}>
+    <div className={composeClassname(className, 'pagination-root')}>
       {showFallbackUI ? (
         invalidFallbackUI
       ) : (
         <>
-          {/* previous */}
+          {/* Previous step */}
+          {renderOneStepNavigation(previousUI, page - 1, cn.previous)}
 
-          {previousUI && (
-            <Slot onClick={handleClickPrevious(page)}>
-              {previousUI({
-                ...itemParams,
-                targetPage: page - 1,
-              })}
-            </Slot>
-          )}
-
-          {/* left boundary */}
+          {/* Left boundary */}
           {range(leftBoundaryStart, leftBoundaryEnd).map(renderItem)}
 
-          {/* left trunc */}
+          {/* Left trunc ~ Sibling */}
           {skipLeftTrunc ? (
             range(leftBoundaryEnd + 1, siblingEnd).map(renderItem)
           ) : (
             <>
-              {leftTruncUI &&
-                leftTruncUI({
-                  ...itemParams,
-                  targetPage: Math.max(firstPage, page - truncStep),
-                })}
+              {renderTrunc(leftTruncUI, Math.max(firstPage, page - truncStep))}
               {range(siblingStart, siblingEnd).map(renderItem)}
             </>
           )}
 
-          {/* right trunc */}
+          {/* Right trunc ~ Right boundary */}
           {skipRightTrunc ? (
             range(siblingEnd + 1, rightBoundaryEnd).map(renderItem)
           ) : (
             <>
-              {rightTruncUI &&
-                rightTruncUI({
-                  ...itemParams,
-                  targetPage: Math.min(totalPageCount, page + truncStep),
-                })}
+              {renderTrunc(
+                rightTruncUI,
+                Math.min(totalPageCount, page + truncStep)
+              )}
               {range(rightBoundaryStart, rightBoundaryEnd).map(renderItem)}
             </>
           )}
 
-          {/* next */}
-
-          {nextUI && (
-            <Slot onClick={handleClickNext(page)}>
-              {nextUI({
-                ...itemParams,
-                targetPage: page + 1,
-              })}
-            </Slot>
-          )}
+          {/* Next step */}
+          {renderOneStepNavigation(nextUI, page + 1, cn.next)}
         </>
       )}
     </div>
@@ -209,11 +259,11 @@ const defaultTruncUI: PaginationItemUI = () => {
 };
 
 const defaultPreviousUI: PaginationItemUI = () => {
-  return <button type="button">&lt;</button>;
+  return <button type="button">{'<'}</button>;
 };
 
 const defaultNextUI: PaginationItemUI = () => {
-  return <button type="button">&gt;</button>;
+  return <button type="button">{'>'}</button>;
 };
 
 const defaultItemUI: PaginationItemUI = ({ targetPage }) => {
@@ -222,16 +272,3 @@ const defaultItemUI: PaginationItemUI = ({ targetPage }) => {
 
 export { Pagination };
 export type { PaginationProps, PaginationItemUI };
-
-// [previous] [leftBoundary] [lT] [rT] [rightBoundary] [next]
-// 지울 수 있는 것:
-// > Boundary -> count 0
-// > Sibling -> count 0
-// > prevUI, nextUI, truncUI, itemUI -> `null`값 주면 됨.
-
-// TODO:
-//   클래스이름 넣기
-//   root
-//   pagination-item
-//   -> prev, next, sibling, boundary
-//   active
