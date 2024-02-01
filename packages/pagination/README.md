@@ -1,3 +1,7 @@
-# pub-test
+# pagination
 
-npm-publish 테스트용 패키지
+## installation
+
+```bash
+$ yarn add @mjsdo/react-pagination
+```
