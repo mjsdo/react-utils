@@ -2784,6 +2784,17 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@mjsdo/react-pagination@workspace:packages/pagination":
+  version: 0.0.0-use.local
+  resolution: "@mjsdo/react-pagination@workspace:packages/pagination"
+  dependencies:
+    "@radix-ui/react-slot": "npm:^1.0.2"
+  peerDependencies:
+    react: ^17.0 || ^18.0
+    react-dom: ^17.0 || ^18.0
+  languageName: unknown
+  linkType: soft
+
 "@mjsdo/react-use-get-state@workspace:packages/use-get-state":
   version: 0.0.0-use.local
   resolution: "@mjsdo/react-use-get-state@workspace:packages/use-get-state"
@@ -4592,7 +4603,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@radix-ui/react-slot@npm:1.0.2":
+"@radix-ui/react-slot@npm:1.0.2, @radix-ui/react-slot@npm:^1.0.2":
   version: 1.0.2
   resolution: "@radix-ui/react-slot@npm:1.0.2"
   dependencies:
@@ -15504,6 +15515,7 @@ __metadata:
     "@parcel/transformer-typescript-types": "npm:2.11.0"
     "@radix-ui/react-context": "npm:^1.0.1"
     "@radix-ui/react-dialog": "npm:^1.0.5"
+    "@radix-ui/react-slot": "npm:^1.0.2"
     "@storybook/addon-essentials": "npm:^7.6.10"
     "@storybook/addon-interactions": "npm:^7.6.10"
     "@storybook/addon-links": "npm:^7.6.10"
