@@ -1,4 +1,4 @@
-import type { ReactElement, ReactNode } from 'react';
+import type { MouseEventHandler, ReactElement, ReactNode } from 'react';
 
 import { clamp } from '@radix-ui/number';
 import { Slot } from '@radix-ui/react-slot';
@@ -50,7 +50,7 @@ interface PaginationProps {
    * - 각 UI 컴포넌트에 `onClick` 핸들러가 있는경우 합성된다.
    * - 호출을 막기 위해서는 각 UI 컴포넌트의 `onClick` 핸들러에서 `e.preventDefault()`를 호출하면 된다.
    */
-  onPageChange: (page: number) => void;
+  onPageChange?: (page: number) => void;
 
   /**
    * - 0 이상이어야 함
@@ -148,7 +148,7 @@ const Pagination = (props: PaginationProps) => {
   };
 
   const renderItem = (targetPage: number) => {
-    const onClick = () => onPageChange(targetPage);
+    const onClick = () => onPageChange?.(targetPage);
     const isCurrentPage = targetPage === page;
 
     return (
@@ -174,7 +174,7 @@ const Pagination = (props: PaginationProps) => {
     return (
       truncUI && (
         <Slot
-          onClick={() => onPageChange(targetPage)}
+          onClick={() => onPageChange?.(targetPage)}
           className={composeClassnames(cn.item, cn.trunc)}
         >
           {truncUI({
@@ -193,7 +193,7 @@ const Pagination = (props: PaginationProps) => {
   ) => {
     const onClick = () => {
       if (isPageValid(targetPage)) return;
-      onPageChange(targetPage);
+      onPageChange?.(targetPage);
     };
 
     return (
