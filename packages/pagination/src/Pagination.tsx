@@ -119,6 +119,12 @@ const Pagination = (props: PaginationProps) => {
     lastPage: totalPageCount,
   };
 
+  const renderItem = (page: number) => (
+    <Fragment key={page}>
+      {itemUI && itemUI({ ...itemParams, targetPage: page })}
+    </Fragment>
+  );
+
   return (
     <div className={className}>
       {showFallbackUI ? (
@@ -142,19 +148,11 @@ const Pagination = (props: PaginationProps) => {
           </Slot>
 
           {/* left boundary */}
-          {range(leftBoundaryStart, leftBoundaryEnd).map((page) => (
-            <Fragment key={page}>
-              {itemUI && itemUI({ ...itemParams, targetPage: page })}
-            </Fragment>
-          ))}
+          {range(leftBoundaryStart, leftBoundaryEnd).map(renderItem)}
 
           {/* left trunc */}
           {skipLeftTrunc ? (
-            range(leftBoundaryEnd + 1, siblingEnd).map((page) => (
-              <Fragment key={page}>
-                {itemUI && itemUI({ ...itemParams, targetPage: page })}
-              </Fragment>
-            ))
+            range(leftBoundaryEnd + 1, siblingEnd).map(renderItem)
           ) : (
             <>
               {leftTruncUI &&
@@ -162,21 +160,13 @@ const Pagination = (props: PaginationProps) => {
                   ...itemParams,
                   targetPage: Math.max(firstPage, page - truncStep),
                 })}
-              {range(siblingStart, siblingEnd).map((page) => (
-                <Fragment key={page}>
-                  {itemUI && itemUI({ ...itemParams, targetPage: page })}
-                </Fragment>
-              ))}
+              {range(siblingStart, siblingEnd).map(renderItem)}
             </>
           )}
 
           {/* right trunc */}
           {skipRightTrunc ? (
-            range(siblingEnd + 1, rightBoundaryEnd).map((page) => (
-              <Fragment key={page}>
-                {itemUI && itemUI({ ...itemParams, targetPage: page })}
-              </Fragment>
-            ))
+            range(siblingEnd + 1, rightBoundaryEnd).map(renderItem)
           ) : (
             <>
               {rightTruncUI &&
@@ -184,11 +174,7 @@ const Pagination = (props: PaginationProps) => {
                   ...itemParams,
                   targetPage: Math.min(totalPageCount, page + truncStep),
                 })}
-              {range(rightBoundaryStart, rightBoundaryEnd).map((page) => (
-                <Fragment key={page}>
-                  {itemUI && itemUI({ ...itemParams, targetPage: page })}
-                </Fragment>
-              ))}
+              {range(rightBoundaryStart, rightBoundaryEnd).map(renderItem)}
             </>
           )}
 
