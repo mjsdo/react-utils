@@ -1,12 +1,33 @@
-import type { ReactElement } from 'react';
+import type { ReactElement, ReactNode } from 'react';
 
-import React from 'react';
+import { clamp } from '@radix-ui/number';
+import { Slot } from '@radix-ui/react-slot';
+import React, { Fragment } from 'react';
 
-type PaginationItemUI = (
-  targetPage: number,
-  currentPage: number,
-  lastPage: number
-) => ReactElement;
+// [min, min+1, ..., max]
+const range = (min: number, max: number) => {
+  if (min > max) return [];
+  if (min === max) return [min];
+  return Array(max - min + 1)
+    .fill(undefined)
+    .map((_, index) => index + min);
+};
+
+const firstPage = 1;
+
+type PaginationItemUI = (params: PaginationItemParams) => ReactElement;
+
+type PaginationItemParams = {
+  /** 이동할 페이지 */
+  targetPage: number;
+  currentPage: number;
+  lastPage: number;
+  /**
+   * - `currentPage`가 유효한지를 나타내는 boolean 값
+   * - `currentPage`가 1보다 작거나 `totalPageCount`보다 크다면 `false`
+   */
+  isCurrentPageValid: boolean;
+};
 
 interface PaginationProps {
   /** 페이지 상태 */
@@ -37,15 +58,21 @@ interface PaginationProps {
   truncStep?: number;
 
   /** 왼쪽 Trunc UI */
-  leftTruncUI?: PaginationItemUI;
+  leftTruncUI?: PaginationItemUI | null;
   /** 오른쪽 Trunc UI */
-  rightTruncUI?: PaginationItemUI;
+  rightTruncUI?: PaginationItemUI | null;
   /** 이전 페이지 UI */
-  previousUI?: PaginationItemUI;
+  previousUI?: PaginationItemUI | null;
   /** 다음 페이지 UI */
-  nextUI?: PaginationItemUI;
+  nextUI?: PaginationItemUI | null;
   /** 페이지 UI */
-  itemUI?: PaginationItemUI;
+  itemUI?: PaginationItemUI | null;
+
+  /**
+   * - `page`값이 범위를 벗어났을 때 보여줄 Pagination UI
+   * - 전달하지 않는 경우 기존 Pagination UI가 보임
+   */
+  invalidFallbackUI?: ReactNode;
 
   className?: string;
 }
@@ -67,11 +94,123 @@ const Pagination = (props: PaginationProps) => {
     nextUI = defaultNextUI,
 
     itemUI = defaultItemUI,
+    invalidFallbackUI,
 
     className,
   } = props;
 
-  return <div className={className}>Pagination</div>;
+  const isCurrentPageValid = firstPage <= page && page <= totalPageCount;
+  const showFallbackUI = !isCurrentPageValid && invalidFallbackUI;
+  const clampBoundary: [number, number] = [firstPage, totalPageCount];
+
+  const leftBoundaryStart = firstPage;
+  const leftBoundaryEnd = clamp(boundaryCount, clampBoundary);
+  const siblingStart = clamp(page - siblingCount, clampBoundary);
+  const siblingEnd = clamp(page + siblingCount, clampBoundary);
+  const rightBoundaryStart = totalPageCount - boundaryCount + 1;
+  const rightBoundaryEnd = totalPageCount;
+
+  const skipLeftTrunc = leftBoundaryEnd >= siblingStart - 1;
+  const skipRightTrunc = siblingEnd >= rightBoundaryStart - 1;
+
+  const itemParams: Omit<PaginationItemParams, 'targetPage'> = {
+    currentPage: page,
+    isCurrentPageValid,
+    lastPage: totalPageCount,
+  };
+
+  return (
+    <div className={className}>
+      {showFallbackUI ? (
+        invalidFallbackUI
+      ) : (
+        <>
+          {/* previous */}
+          <Slot
+            onClick={() => {
+              const targetPage = page - 1;
+              if (targetPage < firstPage) return;
+
+              onPageChange?.(clamp(page - 1, clampBoundary));
+            }}
+          >
+            {previousUI &&
+              previousUI({
+                ...itemParams,
+                targetPage: page - 1,
+              })}
+          </Slot>
+
+          {/* left boundary */}
+          {range(leftBoundaryStart, leftBoundaryEnd).map((page) => (
+            <Fragment key={page}>
+              {itemUI && itemUI({ ...itemParams, targetPage: page })}
+            </Fragment>
+          ))}
+
+          {/* left trunc */}
+          {skipLeftTrunc ? (
+            range(leftBoundaryEnd + 1, siblingEnd).map((page) => (
+              <Fragment key={page}>
+                {itemUI && itemUI({ ...itemParams, targetPage: page })}
+              </Fragment>
+            ))
+          ) : (
+            <>
+              {leftTruncUI &&
+                leftTruncUI({
+                  ...itemParams,
+                  targetPage: Math.max(firstPage, page - truncStep),
+                })}
+              {range(siblingStart, siblingEnd).map((page) => (
+                <Fragment key={page}>
+                  {itemUI && itemUI({ ...itemParams, targetPage: page })}
+                </Fragment>
+              ))}
+            </>
+          )}
+
+          {/* right trunc */}
+          {skipRightTrunc ? (
+            range(siblingEnd + 1, rightBoundaryEnd).map((page) => (
+              <Fragment key={page}>
+                {itemUI && itemUI({ ...itemParams, targetPage: page })}
+              </Fragment>
+            ))
+          ) : (
+            <>
+              {rightTruncUI &&
+                rightTruncUI({
+                  ...itemParams,
+                  targetPage: Math.min(totalPageCount, page + truncStep),
+                })}
+              {range(rightBoundaryStart, rightBoundaryEnd).map((page) => (
+                <Fragment key={page}>
+                  {itemUI && itemUI({ ...itemParams, targetPage: page })}
+                </Fragment>
+              ))}
+            </>
+          )}
+
+          {/* next */}
+          <Slot
+            onClick={() => {
+              const targetPage = page + 1;
+              if (targetPage > totalPageCount) return;
+
+              onPageChange?.(clamp(page + 1, clampBoundary));
+            }}
+          >
+            {nextUI &&
+              nextUI({
+                ...itemParams,
+                targetPage: page + 1,
+              })}
+          </Slot>
+        </>
+      )}
+    </div>
+  );
 };
 
 const defaultTruncUI: PaginationItemUI = () => {
@@ -86,7 +225,7 @@ const defaultNextUI: PaginationItemUI = () => {
   return <button type="button">&gt;</button>;
 };
 
-const defaultItemUI: PaginationItemUI = (targetPage) => {
+const defaultItemUI: PaginationItemUI = ({ targetPage }) => {
   return <button type="button">{targetPage}</button>;
 };
 
@@ -97,9 +236,7 @@ export type { PaginationProps, PaginationItemUI };
 // 지울 수 있는 것:
 // > Boundary -> count 0
 // > Sibling -> count 0
-// > prevUI, nextUI -> null값 주면 됨.
-// > truncUI -> null
-// > ItemUI -> null
+// > prevUI, nextUI, truncUI, itemUI -> `null`값 주면 됨.
 
 // TODO:
 //   클래스이름 넣기
