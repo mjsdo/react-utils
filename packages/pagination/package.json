@@ -33,6 +33,7 @@
     "dist"
   ],
   "dependencies": {
+    "@radix-ui/number": "^1.0.1",
     "@radix-ui/react-slot": "^1.0.2"
   },
   "peerDependencies": {

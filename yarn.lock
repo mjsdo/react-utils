@@ -2788,6 +2788,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@mjsdo/react-pagination@workspace:packages/pagination"
   dependencies:
+    "@radix-ui/number": "npm:^1.0.1"
     "@radix-ui/react-slot": "npm:^1.0.2"
   peerDependencies:
     react: ^17.0 || ^18.0
@@ -4143,7 +4144,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@radix-ui/number@npm:1.0.1":
+"@radix-ui/number@npm:1.0.1, @radix-ui/number@npm:^1.0.1":
   version: 1.0.1
   resolution: "@radix-ui/number@npm:1.0.1"
   dependencies:
@@ -15513,6 +15514,7 @@ __metadata:
     "@nx/vite": "npm:^17.2.8"
     "@parcel/packager-ts": "npm:2.11.0"
     "@parcel/transformer-typescript-types": "npm:2.11.0"
+    "@radix-ui/number": "npm:^1.0.1"
     "@radix-ui/react-context": "npm:^1.0.1"
     "@radix-ui/react-dialog": "npm:^1.0.5"
     "@radix-ui/react-slot": "npm:^1.0.2"
