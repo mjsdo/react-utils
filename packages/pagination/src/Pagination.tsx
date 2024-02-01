@@ -4,7 +4,7 @@ import { clamp } from '@radix-ui/number';
 import { Slot } from '@radix-ui/react-slot';
 import React, { Fragment } from 'react';
 
-const composeClassname = (...args: Array<undefined | boolean | string>) => {
+const composeClassnames = (...args: Array<undefined | boolean | string>) => {
   return args.filter(Boolean).join(' ');
 };
 
@@ -26,9 +26,9 @@ const cn = {
   currentPage: 'pagination-item--current-page',
 };
 
-type PaginationItemUI = (params: PaginationItemParams) => ReactElement;
+type PaginationItemUI = (params: PaginationItemUIParams) => ReactElement;
 
-type PaginationItemParams = {
+type PaginationItemUIParams = {
   /** 이동할 페이지 */
   targetPage: number;
   currentPage: number;
@@ -50,7 +50,7 @@ interface PaginationProps {
    * - 각 UI 컴포넌트에 `onClick` 핸들러가 있는경우 합성된다.
    * - 호출을 막기 위해서는 각 UI 컴포넌트의 `onClick` 핸들러에서 `e.preventDefault()`를 호출하면 된다.
    */
-  onPageChange?: (page: number) => void;
+  onPageChange: (page: number) => void;
 
   /**
    * - 0 이상이어야 함
@@ -141,14 +141,14 @@ const Pagination = (props: PaginationProps) => {
   const skipLeftTrunc = leftBoundaryEnd >= siblingStart - 1;
   const skipRightTrunc = siblingEnd >= rightBoundaryStart - 1;
 
-  const itemParams: Omit<PaginationItemParams, 'targetPage'> = {
+  const itemParams: Omit<PaginationItemUIParams, 'targetPage'> = {
     currentPage: page,
     isCurrentPageValid,
     lastPage: totalPageCount,
   };
 
   const renderItem = (targetPage: number) => {
-    const onClick = () => onPageChange?.(targetPage);
+    const onClick = () => onPageChange(targetPage);
     const isCurrentPage = targetPage === page;
 
     return (
@@ -156,7 +156,7 @@ const Pagination = (props: PaginationProps) => {
         {itemUI && (
           <Slot
             onClick={onClick}
-            className={composeClassname(
+            className={composeClassnames(
               cn.item,
               isCurrentPage && cn.currentPage
             )}
@@ -174,8 +174,8 @@ const Pagination = (props: PaginationProps) => {
     return (
       truncUI && (
         <Slot
-          onClick={() => onPageChange?.(targetPage)}
-          className={composeClassname(cn.item, cn.trunc)}
+          onClick={() => onPageChange(targetPage)}
+          className={composeClassnames(cn.item, cn.trunc)}
         >
           {truncUI({
             ...itemParams,
@@ -193,14 +193,14 @@ const Pagination = (props: PaginationProps) => {
   ) => {
     const onClick = () => {
       if (isPageValid(targetPage)) return;
-      onPageChange?.(targetPage);
+      onPageChange(targetPage);
     };
 
     return (
       navigationUI && (
         <Slot
           onClick={onClick}
-          className={composeClassname(cn.item, itemClassName)}
+          className={composeClassnames(cn.item, itemClassName)}
         >
           {navigationUI({
             ...itemParams,
@@ -212,7 +212,7 @@ const Pagination = (props: PaginationProps) => {
   };
 
   return (
-    <div className={composeClassname(className, 'pagination-root')}>
+    <div className={composeClassnames(className, 'pagination-root')}>
       {showFallbackUI ? (
         invalidFallbackUI
       ) : (
@@ -271,4 +271,4 @@ const defaultItemUI: PaginationItemUI = ({ targetPage }) => {
 };
 
 export { Pagination };
-export type { PaginationProps, PaginationItemUI };
+export type { PaginationProps, PaginationItemUI, PaginationItemUIParams };
