@@ -194,7 +194,7 @@ const Pagination = (props: PaginationProps) => {
     const onClick =
       onPageChange &&
       (() => {
-        if (isPageValid(targetPage)) return;
+        if (!isPageValid(targetPage)) return;
         onPageChange(targetPage);
       });
 
