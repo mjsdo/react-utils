@@ -14,6 +14,8 @@ const firstPage = 1;
 const cn = {
   item: 'pagination-item',
   trunc: 'pagination-item__trunc',
+  leftTrunc: 'pagination-item__trunc--left',
+  rightTrunc: 'pagination-item__trunc--right',
   previous: 'pagination-item__previous',
   next: 'pagination-item__next',
   currentPage: 'pagination-item--current-page',
@@ -166,7 +168,8 @@ const Pagination = (props: PaginationProps) => {
 
   const renderTrunc = (
     truncUI: PaginationItemUI | null,
-    targetPage: number
+    targetPage: number,
+    itemClassName: string
   ) => {
     const onClick = onPageChange && (() => onPageChange(targetPage));
 
@@ -174,7 +177,7 @@ const Pagination = (props: PaginationProps) => {
       truncUI && (
         <Slot
           onClick={onClick}
-          className={composeClassnames(cn.item, cn.trunc)}
+          className={composeClassnames(cn.item, cn.trunc, itemClassName)}
         >
           {truncUI({ ...itemParams, targetPage })}
         </Slot>
@@ -222,14 +225,16 @@ const Pagination = (props: PaginationProps) => {
             if (value === Trunc.LEFT) {
               return renderTrunc(
                 leftTruncUI,
-                clamp(page - truncStep, pageMinmax)
+                clamp(page - truncStep, pageMinmax),
+                cn.leftTrunc
               );
             }
 
             if (value === Trunc.RIGHT) {
               return renderTrunc(
                 rightTruncUI,
-                clamp(page + truncStep, pageMinmax)
+                clamp(page + truncStep, pageMinmax),
+                cn.rightTrunc
               );
             }
 
