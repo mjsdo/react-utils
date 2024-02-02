@@ -1,20 +1,13 @@
-import type { ReactElement, ReactNode } from 'react';
+import type { CSSProperties, ReactElement, ReactNode } from 'react';
 
 import { clamp } from '@radix-ui/number';
 import { Slot } from '@radix-ui/react-slot';
 import React, { Fragment } from 'react';
 
+import { createPagination, Trunc } from './createPagination';
+
 const composeClassnames = (...args: Array<undefined | boolean | string>) => {
   return args.filter(Boolean).join(' ');
-};
-
-// [min, min+1, ..., max]
-const range = (min: number, max: number) => {
-  if (min > max) return [];
-  if (min === max) return [min];
-  return Array(max - min + 1)
-    .fill(undefined)
-    .map((_, index) => index + min);
 };
 
 const firstPage = 1;
@@ -55,16 +48,19 @@ interface PaginationProps {
   /**
    * - 0 이상이어야 함
    * - 현재 페이지 UI의 앞뒤로 표시할 페이지의 개수
+   * @default 1
    */
   siblingCount?: number;
   /**
    * - 0 이상이어야 함
    * - 첫 페이지 UI의 뒤로, 마지막 페이지 UI의 앞으로 표시할 페이지의 개수
+   * @default 1
    */
   boundaryCount?: number;
   /**
    * - Trunc UI를 클릭했을 때 이동할 페이지를 결정
    * - 현재 페이지가 5, `truncStep`이 1이면, trunc UI 클릭시 4 또는 6으로 이동
+   * @default 5
    */
   truncStep?: number;
 
@@ -101,6 +97,7 @@ interface PaginationProps {
   invalidFallbackUI?: ReactNode;
 
   className?: string;
+  style?: CSSProperties;
 }
 
 const Pagination = (props: PaginationProps) => {
@@ -123,23 +120,22 @@ const Pagination = (props: PaginationProps) => {
     invalidFallbackUI,
 
     className,
+    style,
   } = props;
 
   const isPageValid = (page: number) =>
     firstPage <= page && page <= totalPageCount;
   const isCurrentPageValid = isPageValid(page);
   const showFallbackUI = !isCurrentPageValid && invalidFallbackUI;
-  const clampBoundary: [number, number] = [firstPage, totalPageCount];
 
-  const leftBoundaryStart = firstPage;
-  const leftBoundaryEnd = clamp(boundaryCount, clampBoundary);
-  const siblingStart = clamp(page - siblingCount, clampBoundary);
-  const siblingEnd = clamp(page + siblingCount, clampBoundary);
-  const rightBoundaryStart = totalPageCount - boundaryCount + 1;
-  const rightBoundaryEnd = totalPageCount;
-
-  const skipLeftTrunc = leftBoundaryEnd >= siblingStart - 1;
-  const skipRightTrunc = siblingEnd >= rightBoundaryStart - 1;
+  const pageMinmax: [number, number] = [firstPage, totalPageCount];
+  const pagination = createPagination({
+    page,
+    totalPageCount,
+    siblingCount,
+    boundaryCount,
+    firstPage,
+  });
 
   const itemParams: Omit<PaginationItemUIParams, 'targetPage'> = {
     currentPage: page,
@@ -211,7 +207,10 @@ const Pagination = (props: PaginationProps) => {
   };
 
   return (
-    <div className={composeClassnames(className, 'pagination-root')}>
+    <div
+      style={style}
+      className={composeClassnames(className, 'pagination-root')}
+    >
       {showFallbackUI ? (
         invalidFallbackUI
       ) : (
@@ -219,31 +218,23 @@ const Pagination = (props: PaginationProps) => {
           {/* Previous step */}
           {renderOneStepNavigation(previousUI, page - 1, cn.previous)}
 
-          {/* Left boundary */}
-          {range(leftBoundaryStart, leftBoundaryEnd).map(renderItem)}
+          {pagination.map((value) => {
+            if (value === Trunc.LEFT) {
+              return renderTrunc(
+                leftTruncUI,
+                clamp(page - truncStep, pageMinmax)
+              );
+            }
 
-          {/* Left trunc ~ Sibling */}
-          {skipLeftTrunc ? (
-            range(leftBoundaryEnd + 1, siblingEnd).map(renderItem)
-          ) : (
-            <>
-              {renderTrunc(leftTruncUI, Math.max(firstPage, page - truncStep))}
-              {range(siblingStart, siblingEnd).map(renderItem)}
-            </>
-          )}
-
-          {/* Right trunc ~ Right boundary */}
-          {skipRightTrunc ? (
-            range(siblingEnd + 1, rightBoundaryEnd).map(renderItem)
-          ) : (
-            <>
-              {renderTrunc(
+            if (value === Trunc.RIGHT) {
+              return renderTrunc(
                 rightTruncUI,
-                Math.min(totalPageCount, page + truncStep)
-              )}
-              {range(rightBoundaryStart, rightBoundaryEnd).map(renderItem)}
-            </>
-          )}
+                clamp(page + truncStep, pageMinmax)
+              );
+            }
+
+            return renderItem(value);
+          })}
 
           {/* Next step */}
           {renderOneStepNavigation(nextUI, page + 1, cn.next)}
