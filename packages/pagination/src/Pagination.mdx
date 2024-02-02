@@ -1,0 +1,80 @@
+import { Controls, Meta, Story } from '@storybook/blocks';
+
+import * as PaginationStories from './Pagination.stories';
+
+<Meta of={PaginationStories} />
+
+# `pagination`
+
+페이지 이동을 위한 네비게이션을 제공하는 컴포넌트
+
+<br />
+
+# Installation
+
+```bash
+yarn add @mjsdo/react-pagination
+```
+
+# Props
+
+<Story of={PaginationStories.BasicPaginationStory} />
+
+```tsx
+<Pagination
+  page={10}
+  onPageChange={setPage}
+  totalPageCount={10}
+  siblingCount={1}
+  boundaryCount={1}
+/>
+```
+
+<Controls />
+
+# Note
+
+## UI prop에 커스텀 리액트 엘리먼트를 반환하는 함수를 전달하는 경우
+
+- itemUI, previousUI, nextUI, truncUI의 경우도 동일하다.
+- `onClick`, `className`가 커스텀 컴포넌트로 전달되기 때문에, 실제 적용을 위해서 직접 커스텀 컴포넌트 내부에서 prop을 적용시켜야 한다.
+
+예시)
+
+아래와 같이 작성하면 `button`에 `onClick`및 `className`이 자동으로 적용되지만 (`onClick`내부에서 `onPageChange`를 호출)
+
+```tsx
+<Pagination
+  itemUI={({}) => {
+    return <button type="button">{}</button>;
+  }}
+/>
+```
+
+아래와 같이 작성하면 `Button`에 `onClick`및 `className`이 전달되기 때문에
+
+```tsx
+<Pagination
+  itemUI={({}) => {
+    return <Button />;
+  }}
+/>
+```
+
+직접 `Button`컴포넌트에서 핸들러 및 클래스이름을 등록해줘야 한다.
+
+```tsx
+<Pagination
+  itemUI={({ targetPage }) => {
+    return <Button targetPage={targetPage} />;
+  }}
+/>;
+
+const Button = ({ targetPage, onClick, className }) => {
+  return (
+    <button type="button" onClick={onClick} className={className}>
+      {targetPage}
+    </button>
+  );
+};
+```
