@@ -1,4 +1,4 @@
-import type { MouseEventHandler, ReactElement, ReactNode } from 'react';
+import type { ReactElement, ReactNode } from 'react';
 
 import { clamp } from '@radix-ui/number';
 import { Slot } from '@radix-ui/react-slot';
@@ -148,7 +148,7 @@ const Pagination = (props: PaginationProps) => {
   };
 
   const renderItem = (targetPage: number) => {
-    const onClick = () => onPageChange?.(targetPage);
+    const onClick = onPageChange && (() => onPageChange(targetPage));
     const isCurrentPage = targetPage === page;
 
     return (
@@ -167,20 +167,20 @@ const Pagination = (props: PaginationProps) => {
       </Fragment>
     );
   };
+
   const renderTrunc = (
     truncUI: PaginationItemUI | null,
     targetPage: number
   ) => {
+    const onClick = onPageChange && (() => onPageChange(targetPage));
+
     return (
       truncUI && (
         <Slot
-          onClick={() => onPageChange?.(targetPage)}
+          onClick={onClick}
           className={composeClassnames(cn.item, cn.trunc)}
         >
-          {truncUI({
-            ...itemParams,
-            targetPage: targetPage,
-          })}
+          {truncUI({ ...itemParams, targetPage })}
         </Slot>
       )
     );
@@ -191,10 +191,12 @@ const Pagination = (props: PaginationProps) => {
     targetPage: number,
     itemClassName: string
   ) => {
-    const onClick = () => {
-      if (isPageValid(targetPage)) return;
-      onPageChange?.(targetPage);
-    };
+    const onClick =
+      onPageChange &&
+      (() => {
+        if (isPageValid(targetPage)) return;
+        onPageChange(targetPage);
+      });
 
     return (
       navigationUI && (
@@ -202,10 +204,7 @@ const Pagination = (props: PaginationProps) => {
           onClick={onClick}
           className={composeClassnames(cn.item, itemClassName)}
         >
-          {navigationUI({
-            ...itemParams,
-            targetPage,
-          })}
+          {navigationUI({ ...itemParams, targetPage })}
         </Slot>
       )
     );
