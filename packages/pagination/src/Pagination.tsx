@@ -172,10 +172,12 @@ const Pagination = (props: PaginationProps) => {
     itemClassName: string
   ) => {
     const onClick = onPageChange && (() => onPageChange(targetPage));
+    const key = `trunc-${targetPage}`;
 
     return (
       truncUI && (
         <Slot
+          key={key}
           onClick={onClick}
           className={composeClassnames(cn.item, cn.trunc, itemClassName)}
         >
