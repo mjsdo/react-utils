@@ -43,7 +43,6 @@ interface PaginationProps {
   /**
    * - 페이지네이션 아이템 UI를 클릭할 때 수행되는 콜백
    * - 각 UI 컴포넌트에 `onClick` 핸들러가 있는경우 합성된다.
-   * - 호출을 막기 위해서는 각 UI 컴포넌트의 `onClick` 핸들러에서 `e.preventDefault()`를 호출하면 된다.
    */
   onPageChange?: (page: number) => void;
 
@@ -172,10 +171,12 @@ const Pagination = (props: PaginationProps) => {
     itemClassName: string
   ) => {
     const onClick = onPageChange && (() => onPageChange(targetPage));
+    const key = `trunc-${targetPage}`;
 
     return (
       truncUI && (
         <Slot
+          key={key}
           onClick={onClick}
           className={composeClassnames(cn.item, cn.trunc, itemClassName)}
         >
