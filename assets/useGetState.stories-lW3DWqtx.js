@@ -3,8 +3,8 @@ import{j as e,a as u}from"./jsx-runtime-1H0H8r1V.js";import{r as t}from"./index-
   render: () => <CountExample />
 }`,...(v=(f=a.parameters)==null?void 0:f.docs)==null?void 0:v.source}}};var g,S,y;d.parameters={...d.parameters,docs:{...(g=d.parameters)==null?void 0:g.docs,source:{originalSource:`{
   name: 'Form',
-  decorators: [Story => <FormProvider>\r
-        <Story />\r
+  decorators: [Story => <FormProvider>
+        <Story />
       </FormProvider>],
   render: () => <FormExample />
 }`,...(y=(S=d.parameters)==null?void 0:S.docs)==null?void 0:y.source}}};const q=["CountStory","FormStory"],J=Object.freeze(Object.defineProperty({__proto__:null,CountStory:a,FormStory:d,__namedExportsOrder:q,default:$},Symbol.toStringTag,{value:"Module"}));export{a as C,d as F,J as U};
